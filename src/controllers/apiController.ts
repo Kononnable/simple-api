@@ -4,6 +4,7 @@ import { signInRequest, ISignInRequest } from "../models/model";
 import * as Joi from "joi";
 import * as jwt from "jsonwebtoken";
 import { Users, Secret } from "../configs/appConfig";
+import * as crypto from "crypto";
 
 export function apiController(router: Router) {
     router.post("/sign-in", function(req, res) {
@@ -29,7 +30,20 @@ export function apiController(router: Router) {
         }
     });
     router.post("/generate-key-pair", authMidlleware, function(req, res) {
-        res.json({ data: "generate-key-pair" });
+        const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+            modulusLength: 2048,
+            publicKeyEncoding: {
+                type: "spki",
+                format: "pem"
+            },
+            privateKeyEncoding: {
+                type: "pkcs8",
+                format: "pem",
+                cipher: "aes-256-cbc",
+                passphrase: "top secret"
+            }
+        });
+        res.json({ privKey: privateKey, pubKey: publicKey });
     });
     router.post("/encrypt", authMidlleware, function(req, res) {
         res.json({ data: "encrypt" });
