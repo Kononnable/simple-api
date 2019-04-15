@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { authMidlleware } from "../middlewares/auth";
-import { signInRequest } from "../models/model";
+import { signInRequest, ISignInRequest } from "../models/model";
 import * as Joi from "joi";
+import * as jwt from "jsonwebtoken";
+import { Users, Secret } from "../configs/appConfig";
 
 export function apiController(router: Router) {
     router.post("/sign-in", function(req, res) {
@@ -9,7 +11,21 @@ export function apiController(router: Router) {
         if (validationResult.error) {
             res.status(400).send(validationResult.error.message);
         } else {
-            res.json({ data: "/sign-in" });
+            const body = req.body as ISignInRequest;
+            if (
+                Users.some(
+                    v => v.email === body.email && v.password === body.password
+                )
+            ) {
+                const token = jwt.sign({ email: body.email }, Secret, {
+                    expiresIn: "5m"
+                });
+                res.json({
+                    authToken: token
+                });
+            } else {
+                res.sendStatus(401);
+            }
         }
     });
     router.post("/generate-key-pair", authMidlleware, function(req, res) {
