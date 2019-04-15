@@ -6,6 +6,7 @@ FROM base as compilation
 RUN npm ci
 COPY . .
 RUN npm run compile
+RUN npm t
 
 FROM compilation as release
 COPY --from=compilation /usr/src/app/dist/src ./src

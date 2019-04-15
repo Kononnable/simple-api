@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import axios from "axios";
-import { ISignInRequest } from "./../src/models/model";
+import { ISignInRequest } from "./../src/models/SignInRequest";
 import { Users } from "../src/configs/appConfig";
 import { appLogic } from "../src/appLogic";
 import { Server } from "http";

@@ -1,4 +1,4 @@
-import { ISignInRequest } from "../models/model";
+import { ISignInRequest } from "../models/SignInRequest";
 
 export const Users: ISignInRequest[] = [
     {

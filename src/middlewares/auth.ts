@@ -2,7 +2,7 @@ import { Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import { Secret } from "../configs/appConfig";
 import { isArray } from "util";
-import { RequestWithPayload } from "../models/model";
+import { RequestWithPayload } from "../models/RequestWithPayload";
 
 export function authMidlleware(
     req: RequestWithPayload,
