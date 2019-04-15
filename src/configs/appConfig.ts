@@ -12,3 +12,4 @@ export const Users: ISignInRequest[] = [
 ];
 
 export const Secret = "ThisIsSecret";
+export const Secret2 = "ThisIsSecret";
