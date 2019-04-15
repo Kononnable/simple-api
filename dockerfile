@@ -8,7 +8,7 @@ COPY . .
 RUN npm run compile
 
 FROM compilation as release
-COPY --from=compilation /usr/src/app/dist ./
+COPY --from=compilation /usr/src/app/dist/src ./src
 RUN npm ci --only=production
 EXPOSE 3000
 CMD [ "npm", "start" ]

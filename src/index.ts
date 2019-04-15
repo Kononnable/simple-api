@@ -1,14 +1,6 @@
-import express = require('express');
-import bodyParser = require('body-parser');
-import {apiController} from './controllers/apiController';
+import { appLogic } from "./appLogic";
+import { AddressInfo } from "net";
 
-const port = process.env.PORT || 3000;
-
-const app = express();
-const router = express.Router();
-app.use(bodyParser.json());
-
-app.use('/api', apiController(router));
-
-app.listen(port);
-console.log(`App listening on port ${port}!`)
+const server = appLogic();
+console.log(`App listening on port ${
+    (server.address() as AddressInfo).port}!`)
